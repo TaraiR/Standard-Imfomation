@@ -1,0 +1,34 @@
+# Ignore build output directory
+/build
+/export
+
+# Ignore object files and dependent files
+.o
+.d
+
+#Ignore logs folder and log files
+/logs
+.log
+
+#Ignore lock files
+.lock
+
+.bin
+.pdi
+.vitisWorkspace.json
+
+_ide/logs
+_ide/.wsdata
+
+# Vitis HLS generated files
+**/.autopilot/
+**/build/
+**/.Xil/
+**/*.jou
+**/*.str
+**/*.log
+**/solution*/syn/
+**/solution*/impl/
+**/solution*/report/
+**/.cproject
+**/.project

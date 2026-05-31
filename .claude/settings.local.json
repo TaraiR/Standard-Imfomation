@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(& \"C:\\\\Users\\\\shin7\\\\anaconda3\\\\python.exe\" \"C:\\\\Users\\\\shin7\\\\Downloads\\\\fill_keikakusho3.py\")"
+    ]
+  }
+}
