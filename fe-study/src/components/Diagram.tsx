@@ -680,6 +680,87 @@ const InheritanceDiagram = () => (
   </div>
 );
 
+const ComplementDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">2の補数の求め方（例: +5 → -5）</h4>
+    <svg viewBox="0 0 480 160" className="diagram-svg">
+      <rect x="10" y="30" width="120" height="40" rx="6" fill="#667eea" opacity="0.2" stroke="#667eea" strokeWidth="2"/>
+      <text x="70" y="47" textAnchor="middle" fill="#4a5568" fontSize="12" fontWeight="bold">元の数 (+5)</text>
+      <text x="70" y="63" textAnchor="middle" fill="#667eea" fontSize="16" fontWeight="bold" fontFamily="monospace">0101</text>
+
+      <path d="M 135 50 L 175 50" stroke="#718096" strokeWidth="2" markerEnd="url(#ac1)"/>
+      <text x="155" y="42" textAnchor="middle" fill="#718096" fontSize="11">①反転</text>
+
+      <rect x="180" y="30" width="120" height="40" rx="6" fill="#ed8936" opacity="0.2" stroke="#ed8936" strokeWidth="2"/>
+      <text x="240" y="47" textAnchor="middle" fill="#4a5568" fontSize="12" fontWeight="bold">ビット反転</text>
+      <text x="240" y="63" textAnchor="middle" fill="#ed8936" fontSize="16" fontWeight="bold" fontFamily="monospace">1010</text>
+
+      <path d="M 305 50 L 345 50" stroke="#718096" strokeWidth="2" markerEnd="url(#ac1)"/>
+      <text x="325" y="42" textAnchor="middle" fill="#718096" fontSize="11">②+1</text>
+
+      <rect x="350" y="30" width="120" height="40" rx="6" fill="#48bb78" opacity="0.2" stroke="#48bb78" strokeWidth="2"/>
+      <text x="410" y="47" textAnchor="middle" fill="#4a5568" fontSize="12" fontWeight="bold">2の補数 (-5)</text>
+      <text x="410" y="63" textAnchor="middle" fill="#276749" fontSize="16" fontWeight="bold" fontFamily="monospace">1011</text>
+
+      <text x="240" y="110" textAnchor="middle" fill="#4a5568" fontSize="13">確認: 0101 + 1011 = 10000 → 下4桁 = 0000 ✓</text>
+      <text x="240" y="130" textAnchor="middle" fill="#718096" fontSize="11">（足すと桁溢れしてちょうど 0 になる = 正しい補数）</text>
+
+      <defs>
+        <marker id="ac1" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#718096"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+);
+
+const FloatingPointDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">IEEE 754 単精度浮動小数点数（32ビット）の構造</h4>
+    <svg viewBox="0 0 480 140" className="diagram-svg">
+      <rect x="10" y="30" width="40" height="50" rx="4" fill="#fc8181" opacity="0.7"/>
+      <text x="30" y="52" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold">符号</text>
+      <text x="30" y="68" textAnchor="middle" fill="white" fontSize="11">1bit</text>
+
+      <rect x="55" y="30" width="120" height="50" rx="4" fill="#667eea" opacity="0.7"/>
+      <text x="115" y="52" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold">指数部</text>
+      <text x="115" y="68" textAnchor="middle" fill="white" fontSize="11">8bit</text>
+
+      <rect x="180" y="30" width="290" height="50" rx="4" fill="#48bb78" opacity="0.7"/>
+      <text x="325" y="52" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold">仮数部</text>
+      <text x="325" y="68" textAnchor="middle" fill="white" fontSize="11">23bit</text>
+
+      <text x="30" y="105" textAnchor="middle" fill="#c53030" fontSize="11">0=正 1=負</text>
+      <text x="115" y="105" textAnchor="middle" fill="#4a5568" fontSize="11">実際の指数+127</text>
+      <text x="325" y="105" textAnchor="middle" fill="#276749" fontSize="11">小数点以下のビット列</text>
+
+      <text x="240" y="130" textAnchor="middle" fill="#718096" fontSize="11">値 = (-1)^符号 × 1.仮数部 × 2^(指数部-127)</text>
+    </svg>
+  </div>
+);
+
+const DataSizeDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">データ容量の単位</h4>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      {[
+        { label: '1 bit', desc: '0か1の1桁', size: 4, color: '#e2e8f0' },
+        { label: '1 Byte = 8 bit', desc: '英字1文字（ASCII）', size: 20, color: '#bee3f8' },
+        { label: '1 KB = 1,024 B', desc: '短いテキスト程度', size: 40, color: '#90cdf4' },
+        { label: '1 MB = 1,024 KB', desc: '写真1枚〜音楽1曲', size: 65, color: '#667eea' },
+        { label: '1 GB = 1,024 MB', desc: '動画10〜20分', size: 90, color: '#553c9a' },
+        { label: '1 TB = 1,024 GB', desc: 'HDD/SSDの容量単位', size: 115, color: '#322659' },
+      ].map(item => (
+        <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ width: item.size, height: 22, background: item.color, borderRadius: 4, flexShrink: 0 }} />
+          <span style={{ fontWeight: 700, fontSize: 13, minWidth: 140 }}>{item.label}</span>
+          <span style={{ fontSize: 12, color: '#718096' }}>{item.desc}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
 const diagrams: Record<string, React.FC> = {
   binary: BinaryDiagram,
   logic: LogicDiagram,
@@ -704,6 +785,9 @@ const diagrams: Record<string, React.FC> = {
   tree: TreeDiagram,
   oop: OopDiagram,
   inheritance: InheritanceDiagram,
+  complement: ComplementDiagram,
+  floatingpoint: FloatingPointDiagram,
+  datasize: DataSizeDiagram,
 };
 
 const Diagram: React.FC<DiagramProps> = ({ type }) => {
