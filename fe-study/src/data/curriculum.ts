@@ -585,27 +585,47 @@ const baseChapters: Chapter[] = [
     id: 'a3',
     title: 'ネットワーク',
     subject: 'A',
-    description: 'TCP/IP・IPアドレス・プロトコルなど、ネットワークの基本を学びます。',
+    description: 'OSI参照モデル・TCP/IP・IPアドレス・DNS・ルーティングなど、ネットワークの仕組みを体系的に学びます。',
     sections: [
       {
         id: 'a3-1',
-        title: 'TCP/IPとOSI参照モデル',
+        title: 'OSI参照モデルとTCP/IP',
         content: `
 <h3>OSI参照モデル（7層）</h3>
-<p>ネットワークの機能を7つの層（レイヤー）に分けたモデルです。</p>
+<p>ネットワークの機能を7つの層（レイヤー）に分けた国際標準モデルです。異なるメーカーの機器でも通信できるよう、各層の役割と接続方法を規定しています。</p>
 <ol>
-  <li><strong>物理層</strong>: ビットの電気信号変換</li>
-  <li><strong>データリンク層</strong>: 同一ネットワーク内の通信（MACアドレス）</li>
-  <li><strong>ネットワーク層</strong>: 異なるネットワーク間の通信（IPアドレス）</li>
-  <li><strong>トランスポート層</strong>: 信頼性のある通信（TCP/UDP）</li>
-  <li><strong>セッション層</strong>: 通信セッションの管理</li>
-  <li><strong>プレゼンテーション層</strong>: データの形式変換・暗号化</li>
-  <li><strong>アプリケーション層</strong>: アプリが使うプロトコル（HTTP, FTP, DNS）</li>
+  <li><strong>物理層</strong>: ビットを電気信号・光信号に変換。ケーブル・ハブが該当。</li>
+  <li><strong>データリンク層</strong>: 同一ネットワーク内の通信。<strong>MACアドレス</strong>で機器を識別。スイッチが該当。</li>
+  <li><strong>ネットワーク層</strong>: 異なるネットワーク間の経路制御。<strong>IPアドレス</strong>を使用。ルータが該当。</li>
+  <li><strong>トランスポート層</strong>: エンドツーエンドの信頼性確保。<strong>TCP / UDP</strong>が該当。</li>
+  <li><strong>セッション層</strong>: 通信セッションの確立・維持・終了を管理。</li>
+  <li><strong>プレゼンテーション層</strong>: データの形式変換・暗号化・圧縮。</li>
+  <li><strong>アプリケーション層</strong>: ユーザーが使うアプリのプロトコル（HTTP・FTP・DNS・SMTP）。</li>
 </ol>
 
+<h3>TCP/IP の4層モデル</h3>
+<p>実際のインターネットはTCP/IPという4層モデルで動いています。OSIモデルとの対応を把握しましょう。</p>
+<ul>
+  <li><strong>ネットワークインタフェース層</strong>（OSI第1〜2層相当）: イーサネット・Wi-Fi</li>
+  <li><strong>インターネット層</strong>（OSI第3層相当）: IP・ICMP・ARP</li>
+  <li><strong>トランスポート層</strong>（OSI第4層相当）: TCP・UDP</li>
+  <li><strong>アプリケーション層</strong>（OSI第5〜7層相当）: HTTP・FTP・DNS・SMTP</li>
+</ul>
+
 <h3>TCPとUDPの違い</h3>
-<p><strong>TCP</strong>: 信頼性が高い。受信確認あり。遅い。Webやメールに使用。</p>
-<p><strong>UDP</strong>: 信頼性が低い。受信確認なし。速い。動画配信やVoIPに使用。</p>
+<p><strong>TCP（Transmission Control Protocol）</strong></p>
+<ul>
+  <li>3ウェイハンドシェイク（SYN → SYN-ACK → ACK）で接続を確立</li>
+  <li>受信確認（ACK）があり、パケットロス時は再送する</li>
+  <li>順序制御・フロー制御・輻輳制御あり</li>
+  <li>用途: HTTP/HTTPS・メール・FTP（正確性が必要な通信）</li>
+</ul>
+<p><strong>UDP（User Datagram Protocol）</strong></p>
+<ul>
+  <li>コネクションレス。受信確認なし。再送なし。</li>
+  <li>オーバーヘッドが小さく高速</li>
+  <li>用途: 動画ストリーミング・VoIP・DNS・オンラインゲーム（速さ優先）</li>
+</ul>
         `,
         diagram: 'osi',
         questions: [
@@ -614,7 +634,7 @@ const baseChapters: Chapter[] = [
             question: 'IPアドレスを扱う層はOSI参照モデルの第何層か。',
             choices: ['第2層（データリンク層）', '第3層（ネットワーク層）', '第4層（トランスポート層）', '第7層（アプリケーション層）'],
             answer: 1,
-            explanation: 'IPアドレスはネットワーク層（第3層）で扱われます。',
+            explanation: 'IPアドレスはネットワーク層（第3層）で扱われます。MACアドレスはデータリンク層（第2層）です。',
           },
           {
             id: 9,
@@ -622,6 +642,229 @@ const baseChapters: Chapter[] = [
             choices: ['TCP', 'UDP', 'HTTP', 'FTP'],
             answer: 1,
             explanation: 'UDPは受信確認がなく高速なため、多少のパケットロスを許容できる動画配信に適しています。',
+          },
+          {
+            id: 301,
+            question: 'TCPの3ウェイハンドシェイクの手順として正しいものはどれか。',
+            choices: [
+              'ACK → SYN → SYN-ACK',
+              'SYN → SYN-ACK → ACK',
+              'SYN-ACK → SYN → ACK',
+              'SYN → ACK → SYN-ACK',
+            ],
+            answer: 1,
+            explanation: 'TCPの接続確立はSYN（接続要求）→SYN-ACK（確認応答）→ACK（確認）の3ステップです。',
+          },
+        ],
+      },
+      {
+        id: 'a3-2',
+        title: 'IPアドレスとサブネット',
+        content: `
+<h3>IPアドレスとは</h3>
+<p>ネットワーク上の機器を一意に識別する番号です。現在はIPv4（32ビット）とIPv6（128ビット）が使われています。</p>
+
+<h3>IPv4アドレスの構造</h3>
+<p>32ビットを8ビットずつ4つに区切り、10進数でドット区切りで表します。</p>
+<p>例: <code>192.168.1.10</code> → <code>11000000.10101000.00000001.00001010</code></p>
+<p>IPアドレスは<strong>ネットワーク部</strong>（どのネットワークか）と<strong>ホスト部</strong>（そのネットワーク内のどの機器か）に分かれます。</p>
+
+<h3>サブネットマスク</h3>
+<p>ネットワーク部とホスト部の境界を示すビット列です。</p>
+<p>例: <code>255.255.255.0</code>（= /24）なら上位24ビットがネットワーク部、下位8ビットがホスト部。</p>
+<p>このとき同一ネットワーク内のホスト数は <code>2⁸ - 2 = 254台</code>（ネットワークアドレスとブロードキャストアドレスを除く）。</p>
+
+<h3>特殊なIPアドレス</h3>
+<ul>
+  <li><strong>ネットワークアドレス</strong>: ホスト部が全て0。ネットワーク自体を表す。</li>
+  <li><strong>ブロードキャストアドレス</strong>: ホスト部が全て1。同一ネットワーク全体への送信。</li>
+  <li><strong>ループバックアドレス</strong>: <code>127.0.0.1</code>。自分自身を指す。テスト用。</li>
+  <li><strong>プライベートアドレス</strong>: <code>10.x.x.x</code> / <code>172.16〜31.x.x</code> / <code>192.168.x.x</code>。LAN内専用。</li>
+</ul>
+
+<h3>CIDR表記</h3>
+<p>サブネットマスクをビット数で表す方法です。<code>192.168.1.0/24</code> は「192.168.1.0のネットワーク、マスク長24ビット」を意味します。</p>
+
+<h3>IPv6</h3>
+<p>IPv4のアドレス枯渇問題を解決するために作られた128ビットのアドレス体系です。<code>2001:0db8:85a3::8a2e:0370:7334</code> のように16進数でコロン区切りで表します。約340澗個（3.4×10³⁸）のアドレスが使えます。</p>
+        `,
+        diagram: 'ipaddress',
+        questions: [
+          {
+            id: 302,
+            question: 'サブネットマスク 255.255.255.0 (/24) のネットワークで使用できるホストアドレスの数はいくつか。',
+            choices: ['253', '254', '255', '256'],
+            answer: 1,
+            explanation: 'ホスト部8ビットで2⁸=256通りありますが、ネットワークアドレス(0)とブロードキャスト(255)を除くと254台です。',
+          },
+          {
+            id: 303,
+            question: 'プライベートIPアドレスの範囲として正しいものはどれか。',
+            choices: ['8.8.8.0/24', '192.168.0.0/16', '127.0.0.0/8', '224.0.0.0/4'],
+            answer: 1,
+            explanation: '192.168.0.0〜192.168.255.255はプライベートアドレス範囲です。8.8.8.xはGoogleのDNS（グローバル）、127.x.x.xはループバック、224.x.x.xはマルチキャストです。',
+          },
+        ],
+      },
+      {
+        id: 'a3-3',
+        title: 'DNSとルーティング',
+        content: `
+<h3>DNS（Domain Name System）</h3>
+<p>ドメイン名（例: <code>www.example.com</code>）をIPアドレスに変換するシステムです。電話帳のような役割を果たします。</p>
+
+<h3>名前解決の流れ</h3>
+<ol>
+  <li>ブラウザが <code>www.example.com</code> にアクセスしようとする</li>
+  <li>PCがDNSキャッシュを確認（なければDNSサーバに問い合わせ）</li>
+  <li>ルートDNSサーバ → TLDサーバ（.com担当）→ 権威DNSサーバの順に再帰的に問い合わせ</li>
+  <li>IPアドレスをキャッシュして返す</li>
+</ol>
+
+<h3>主要なプロトコルとポート番号</h3>
+<p>ポート番号はアプリケーションを識別する番号（0〜65535）です。ウェルノウンポートは0〜1023。</p>
+<ul>
+  <li><strong>HTTP</strong>: 80番 / <strong>HTTPS</strong>: 443番（Webページ）</li>
+  <li><strong>FTP</strong>: 21番（ファイル転送）</li>
+  <li><strong>SSH</strong>: 22番（安全なリモート接続）</li>
+  <li><strong>SMTP</strong>: 25番（メール送信）</li>
+  <li><strong>POP3</strong>: 110番 / <strong>IMAP</strong>: 143番（メール受信）</li>
+  <li><strong>DNS</strong>: 53番</li>
+  <li><strong>DHCP</strong>: 67/68番（IPアドレスの自動割り当て）</li>
+</ul>
+
+<h3>ルーティング</h3>
+<p>パケットを宛先IPアドレスに向けて転送する経路選択のことです。</p>
+<ul>
+  <li><strong>スタティックルーティング</strong>: 管理者が手動で経路を設定。小規模ネットワーク向け。</li>
+  <li><strong>ダイナミックルーティング</strong>: ルーティングプロトコル（OSPF・BGP等）で自動的に経路を学習・更新。大規模ネットワーク向け。</li>
+</ul>
+
+<h3>NAT（Network Address Translation）</h3>
+<p>プライベートIPアドレスをグローバルIPアドレスに変換する技術です。1つのグローバルIPを複数の端末で共有でき、IPv4アドレス枯渇を緩和します。<strong>NAPT（IPマスカレード）</strong>はポート番号も変換して多対一の変換を行います。</p>
+        `,
+        diagram: 'dns',
+        questions: [
+          {
+            id: 304,
+            question: 'HTTPSが使用するウェルノウンポート番号はどれか。',
+            choices: ['80', '443', '22', '53'],
+            answer: 1,
+            explanation: 'HTTPSは443番ポートを使用します。HTTPは80番、SSHは22番、DNSは53番です。',
+          },
+          {
+            id: 305,
+            question: 'DNSの役割として正しいものはどれか。',
+            choices: [
+              'IPアドレスをMACアドレスに変換する',
+              'ドメイン名をIPアドレスに変換する',
+              'プライベートIPをグローバルIPに変換する',
+              'パケットを宛先に転送する経路を決める',
+            ],
+            answer: 1,
+            explanation: 'DNSはドメイン名（www.example.comなど）をIPアドレスに変換する名前解決サービスです。',
+          },
+        ],
+      },
+      {
+        id: 'a3-4',
+        title: 'LAN・WAN・無線ネットワーク',
+        content: `
+<h3>LAN と WAN</h3>
+<p><strong>LAN（Local Area Network）</strong>: 建物内や構内など限られた範囲のネットワーク。高速・低コスト。</p>
+<p><strong>WAN（Wide Area Network）</strong>: 地理的に離れた場所を結ぶネットワーク。インターネットもWANの一種。</p>
+
+<h3>イーサネット（有線LAN）</h3>
+<p>有線LANの標準規格です。CSMA/CD方式で衝突を検知します。</p>
+<ul>
+  <li><strong>100BASE-TX</strong>: 最大100Mbps。ツイストペアケーブル（CAT5）。</li>
+  <li><strong>1000BASE-T（ギガビットイーサネット）</strong>: 最大1Gbps。CAT5e以上。</li>
+  <li><strong>10GBASE-T</strong>: 最大10Gbps。サーバー間接続などに使用。</li>
+</ul>
+
+<h3>無線LAN（Wi-Fi）</h3>
+<p>IEEE 802.11シリーズの規格です。</p>
+<ul>
+  <li><strong>802.11n（Wi-Fi 4）</strong>: 最大600Mbps。2.4GHz/5GHz両対応。</li>
+  <li><strong>802.11ac（Wi-Fi 5）</strong>: 最大6.9Gbps。5GHz帯。</li>
+  <li><strong>802.11ax（Wi-Fi 6）</strong>: 最大9.6Gbps。混雑環境での効率が向上。</li>
+</ul>
+
+<h3>ネットワーク機器</h3>
+<ul>
+  <li><strong>ハブ（リピータハブ）</strong>: 全ポートに同じデータを送信。第1層。</li>
+  <li><strong>スイッチ（L2スイッチ）</strong>: MACアドレスで宛先を判断して転送。第2層。</li>
+  <li><strong>ルータ</strong>: IPアドレスで経路を判断して転送。第3層。異なるネットワーク間を接続。</li>
+  <li><strong>ファイアウォール</strong>: パケットを監視してアクセス制御。不正通信を遮断。</li>
+</ul>
+
+<h3>VPN（Virtual Private Network）</h3>
+<p>インターネット上に仮想的な専用線を構築し、安全に通信する技術です。テレワークで社内ネットワークに接続する際に使用します。データは暗号化されて転送されます。</p>
+        `,
+        diagram: 'network-devices',
+        questions: [
+          {
+            id: 306,
+            question: 'MACアドレスをもとにパケットを転送するネットワーク機器はどれか。',
+            choices: ['ルータ', 'L2スイッチ', 'リピータハブ', 'ファイアウォール'],
+            answer: 1,
+            explanation: 'L2スイッチ（レイヤ2スイッチ）はMACアドレステーブルを参照して宛先ポートにのみ転送します。ルータはIPアドレスを使用します。',
+          },
+          {
+            id: 307,
+            question: 'テレワークで社内ネットワークに安全に接続するために使われる技術はどれか。',
+            choices: ['DNS', 'DHCP', 'VPN', 'NAT'],
+            answer: 2,
+            explanation: 'VPN（仮想プライベートネットワーク）はインターネット上に暗号化された仮想専用線を構築し、安全なリモートアクセスを実現します。',
+          },
+        ],
+      },
+      {
+        id: 'a3-5',
+        title: 'HTTP・メール・その他のプロトコル',
+        content: `
+<h3>HTTP / HTTPS</h3>
+<p>Webページの転送に使うプロトコルです。</p>
+<p><strong>HTTP</strong>: テキストで通信する。盗聴・改ざんのリスクあり。</p>
+<p><strong>HTTPS</strong>: <strong>TLS（Transport Layer Security）</strong>で暗号化。証明書で相手を認証。現在のWebの標準。</p>
+
+<h3>HTTPの主なメソッド</h3>
+<ul>
+  <li><strong>GET</strong>: データを取得する（URLにパラメータ付加）</li>
+  <li><strong>POST</strong>: データを送信する（フォーム送信など）</li>
+  <li><strong>PUT</strong>: データを更新・作成する</li>
+  <li><strong>DELETE</strong>: データを削除する</li>
+</ul>
+
+<h3>メールプロトコル</h3>
+<ul>
+  <li><strong>SMTP（25番）</strong>: メールの<strong>送信</strong>に使用</li>
+  <li><strong>POP3（110番）</strong>: メールをサーバからダウンロードして受信。ダウンロード後はサーバから削除。</li>
+  <li><strong>IMAP（143番）</strong>: メールをサーバ上で管理。複数デバイスから同じメールを参照できる。</li>
+</ul>
+
+<h3>DHCP（Dynamic Host Configuration Protocol）</h3>
+<p>ネットワークに接続した端末に自動的にIPアドレス・サブネットマスク・デフォルトゲートウェイ・DNSサーバのアドレスを割り当てるプロトコルです。</p>
+
+<h3>SNMP・NTP</h3>
+<p><strong>SNMP</strong>: ネットワーク機器の監視・管理に使うプロトコル。</p>
+<p><strong>NTP（Network Time Protocol）</strong>: ネットワーク上の機器の時刻を同期させるプロトコル。</p>
+        `,
+        diagram: 'http',
+        questions: [
+          {
+            id: 308,
+            question: 'メールをサーバ上で管理し、複数デバイスから参照できるプロトコルはどれか。',
+            choices: ['SMTP', 'POP3', 'IMAP', 'FTP'],
+            answer: 2,
+            explanation: 'IMAPはメールをサーバ上に保存したまま管理するため、スマートフォン・PCなど複数端末で同じ受信ボックスを参照できます。',
+          },
+          {
+            id: 309,
+            question: 'ネットワークに接続した端末に自動的にIPアドレスを割り当てるプロトコルはどれか。',
+            choices: ['DNS', 'DHCP', 'NAT', 'SNMP'],
+            answer: 1,
+            explanation: 'DHCPサーバが接続端末にIPアドレス・サブネットマスク・デフォルトゲートウェイなどを自動的に割り当てます。',
           },
         ],
       },
