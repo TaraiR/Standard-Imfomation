@@ -1202,6 +1202,147 @@ const diagrams: Record<string, React.FC> = {
       </svg>
     </div>
   )) as React.FC,
+  'er-diagram': (() => (
+    <div className="diagram-container">
+      <h4 className="diagram-title">ER図の例（社員と部署）</h4>
+      <svg viewBox="0 0 480 160" className="diagram-svg">
+        <rect x="20" y="40" width="140" height="80" rx="8" fill="#667eea" opacity="0.15" stroke="#667eea" strokeWidth="2"/>
+        <text x="90" y="65" textAnchor="middle" fill="#667eea" fontWeight="bold" fontSize="13">社員</text>
+        <text x="90" y="83" textAnchor="middle" fill="#4a5568" fontSize="11">社員ID (PK)</text>
+        <text x="90" y="98" textAnchor="middle" fill="#4a5568" fontSize="11">氏名, 年齢</text>
+        <text x="90" y="113" textAnchor="middle" fill="#e53e3e" fontSize="11">部署ID (FK)</text>
+        <rect x="320" y="40" width="140" height="80" rx="8" fill="#48bb78" opacity="0.15" stroke="#48bb78" strokeWidth="2"/>
+        <text x="390" y="65" textAnchor="middle" fill="#48bb78" fontWeight="bold" fontSize="13">部署</text>
+        <text x="390" y="83" textAnchor="middle" fill="#4a5568" fontSize="11">部署ID (PK)</text>
+        <text x="390" y="98" textAnchor="middle" fill="#4a5568" fontSize="11">部署名</text>
+        <line x1="162" y1="80" x2="318" y2="80" stroke="#718096" strokeWidth="2"/>
+        <text x="190" y="72" fill="#4a5568" fontSize="12" fontWeight="bold">多</text>
+        <text x="295" y="72" fill="#4a5568" fontSize="12" fontWeight="bold">1</text>
+        <text x="240" y="72" textAnchor="middle" fill="#718096" fontSize="11">所属する</text>
+        <text x="240" y="140" textAnchor="middle" fill="#718096" fontSize="11">多対1：複数の社員が1つの部署に所属</text>
+      </svg>
+    </div>
+  )) as React.FC,
+  nosql: (() => (
+    <div className="diagram-container">
+      <h4 className="diagram-title">NoSQLの種類と用途</h4>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+        {[
+          { type: 'キーバリュー型', example: 'Redis, DynamoDB', use: 'セッション・キャッシュ', color: '#667eea' },
+          { type: 'ドキュメント型', example: 'MongoDB, Firestore', use: 'WebアプリのデータAPI', color: '#48bb78' },
+          { type: 'カラム型', example: 'Cassandra, HBase', use: 'ビッグデータ・IoT分析', color: '#ed8936' },
+          { type: 'グラフ型', example: 'Neo4j', use: 'SNS関係・推薦エンジン', color: '#9f7aea' },
+        ].map(n => (
+          <div key={n.type} style={{ border: `2px solid ${n.color}`, borderRadius: 8, padding: '10px 12px', background: `${n.color}10` }}>
+            <div style={{ color: n.color, fontWeight: 800, fontSize: 13 }}>{n.type}</div>
+            <div style={{ fontSize: 11, color: '#718096', marginTop: 2 }}>{n.example}</div>
+            <div style={{ fontSize: 12, color: '#4a5568', marginTop: 4 }}>→ {n.use}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )) as React.FC,
+  uml: (() => (
+    <div className="diagram-container">
+      <h4 className="diagram-title">主なUML図の種類</h4>
+      <table className="truth-table">
+        <thead><tr><th>図の名前</th><th>表現するもの</th><th>使いどき</th></tr></thead>
+        <tbody>
+          {[
+            ['ユースケース図','ユーザーとシステムの対話','要件定義・機能一覧'],
+            ['クラス図','クラスの構造と関係','設計・実装前'],
+            ['シーケンス図','時系列のメッセージ交換','API設計・処理フロー'],
+            ['アクティビティ図','処理の流れ（フロー）','業務フロー・ロジック'],
+            ['状態遷移図','オブジェクトの状態変化','状態機械の設計'],
+          ].map(([name,desc,use])=>(
+            <tr key={name}>
+              <td style={{fontWeight:700,color:'#667eea'}}>{name}</td>
+              <td style={{fontSize:12}}>{desc}</td>
+              <td style={{fontSize:11,color:'#718096'}}>{use}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )) as React.FC,
+  itsm: (() => (
+    <div className="diagram-container">
+      <h4 className="diagram-title">ITILのサービスライフサイクル</h4>
+      <svg viewBox="0 0 480 180" className="diagram-svg">
+        {[
+          {x:190,y:10,label:'サービス戦略',color:'#667eea'},
+          {x:340,y:60,label:'サービス設計',color:'#9f7aea'},
+          {x:280,y:130,label:'サービス移行',color:'#48bb78'},
+          {x:100,y:130,label:'サービス運用',color:'#ed8936'},
+          {x:40,y:60,label:'継続的改善',color:'#fc8181'},
+        ].map((s,i,arr)=>{
+          const next = arr[(i+1)%arr.length];
+          return (
+            <g key={s.label}>
+              <rect x={s.x} y={s.y} width={110} height={36} rx={6} fill={s.color} opacity={0.75}/>
+              <text x={s.x+55} y={s.y+22} textAnchor="middle" fill="white" fontSize={11} fontWeight="bold">{s.label}</text>
+            </g>
+          );
+        })}
+        <text x="240" y="100" textAnchor="middle" fill="#667eea" fontSize="14" fontWeight="bold">ITIL</text>
+        <text x="240" y="118" textAnchor="middle" fill="#718096" fontSize="11">サービスライフサイクル</text>
+      </svg>
+    </div>
+  )) as React.FC,
+  ea: (() => (
+    <div className="diagram-container">
+      <h4 className="diagram-title">エンタープライズアーキテクチャ（EA）の4層</h4>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        {[
+          { label: 'ビジネスアーキテクチャ', desc: '業務プロセス・組織・業務ルール', color: '#667eea' },
+          { label: 'データアーキテクチャ', desc: 'データの構造・関係・流れ', color: '#9f7aea' },
+          { label: 'アプリケーションアーキテクチャ', desc: 'システム・アプリの全体像と関係', color: '#48bb78' },
+          { label: 'テクノロジアーキテクチャ', desc: 'インフラ・HW・OS・NW の技術基盤', color: '#ed8936' },
+        ].map(l => (
+          <div key={l.label} style={{ display: 'flex', alignItems: 'center', gap: 12, background: `${l.color}15`, border: `2px solid ${l.color}`, borderRadius: 8, padding: '8px 14px' }}>
+            <div style={{ width: 14, height: 14, borderRadius: '50%', background: l.color, flexShrink: 0 }} />
+            <span style={{ fontWeight: 700, fontSize: 13, color: '#4a5568', minWidth: 200 }}>{l.label}</span>
+            <span style={{ fontSize: 12, color: '#718096' }}>{l.desc}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )) as React.FC,
+  graph: (() => (
+    <div className="diagram-container">
+      <h4 className="diagram-title">BFS vs DFS の探索順序の違い</h4>
+      <svg viewBox="0 0 480 180" className="diagram-svg">
+        {/* Graph structure */}
+        {[[240,20],[120,80],[360,80],[60,150],[180,150],[300,150],[420,150]].map(([cx,cy],i)=>(
+          <g key={i}>
+            <circle cx={cx} cy={cy} r={22} fill={i===0?'#667eea':'#e2e8f0'} stroke="#718096" strokeWidth={1.5}/>
+            <text x={cx} y={cy+5} textAnchor="middle" fill={i===0?'white':'#4a5568'} fontSize={13} fontWeight="bold">{i+1}</text>
+          </g>
+        ))}
+        {[[240,20,120,80],[240,20,360,80],[120,80,60,150],[120,80,180,150],[360,80,300,150],[360,80,420,150]].map(([x1,y1,x2,y2],i)=>(
+          <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#718096" strokeWidth={1.5}/>
+        ))}
+        <text x="240" y="170" textAnchor="middle" fill="#718096" fontSize="11">BFS順: 1→2→3→4→5→6→7　DFS順: 1→2→4→5→3→6→7</text>
+      </svg>
+    </div>
+  )) as React.FC,
+  'design-pattern': (() => (
+    <div className="diagram-container">
+      <h4 className="diagram-title">GoFデザインパターンの分類</h4>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
+        {[
+          { cat: '生成パターン', patterns: ['Singleton','Factory Method','Abstract Factory','Builder','Prototype'], color: '#667eea' },
+          { cat: '構造パターン', patterns: ['Adapter','Decorator','Facade','Composite','Proxy','Bridge','Flyweight'], color: '#48bb78' },
+          { cat: '振る舞いパターン', patterns: ['Observer','Strategy','Template Method','Command','Iterator','State'], color: '#ed8936' },
+        ].map(g => (
+          <div key={g.cat} style={{ border: `2px solid ${g.color}`, borderRadius: 8, padding: '10px 10px', background: `${g.color}08` }}>
+            <div style={{ color: g.color, fontWeight: 800, fontSize: 12, marginBottom: 6 }}>{g.cat}</div>
+            {g.patterns.map(p => <div key={p} style={{ fontSize: 11, color: '#4a5568', padding: '1px 0' }}>• {p}</div>)}
+          </div>
+        ))}
+      </div>
+    </div>
+  )) as React.FC,
   complement: ComplementDiagram,
   floatingpoint: FloatingPointDiagram,
   datasize: DataSizeDiagram,
