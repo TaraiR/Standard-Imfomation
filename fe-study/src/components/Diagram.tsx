@@ -297,6 +297,389 @@ const ClockDiagram = () => (
   </div>
 );
 
+const OsDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">OSの主な機能</h4>
+    <svg viewBox="0 0 480 200" className="diagram-svg">
+      <rect x="10" y="10" width="460" height="60" rx="8" fill="#667eea" opacity="0.15" stroke="#667eea" strokeWidth="2"/>
+      <text x="240" y="38" textAnchor="middle" fill="#4a5568" fontWeight="bold" fontSize="14">アプリケーション</text>
+      <text x="240" y="58" textAnchor="middle" fill="#667eea" fontSize="12">Word / Chrome / ゲームなど</text>
+      {[
+        { x: 10, label: 'プロセス管理', sub: 'マルチタスク', color: '#48bb78' },
+        { x: 125, label: 'メモリ管理', sub: '仮想記憶', color: '#ed8936' },
+        { x: 240, label: 'ファイル管理', sub: 'ディスクI/O', color: '#9f7aea' },
+        { x: 355, label: 'デバイス管理', sub: 'ドライバ', color: '#fc8181' },
+      ].map(item => (
+        <g key={item.label}>
+          <rect x={item.x} y="85" width="105" height="55" rx="6" fill={item.color} opacity="0.2" stroke={item.color} strokeWidth="1.5"/>
+          <text x={item.x + 52} y="108" textAnchor="middle" fill="#4a5568" fontSize="12" fontWeight="bold">{item.label}</text>
+          <text x={item.x + 52} y="128" textAnchor="middle" fill="#718096" fontSize="11">{item.sub}</text>
+        </g>
+      ))}
+      <rect x="10" y="155" width="460" height="38" rx="8" fill="#2d3748" opacity="0.8"/>
+      <text x="240" y="179" textAnchor="middle" fill="white" fontWeight="bold" fontSize="13">ハードウェア（CPU・メモリ・ディスク）</text>
+    </svg>
+  </div>
+);
+
+const FilesystemDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">ディレクトリ構造（ツリー）</h4>
+    <svg viewBox="0 0 380 200" className="diagram-svg">
+      <rect x="155" y="10" width="70" height="32" rx="6" fill="#667eea" opacity="0.8"/>
+      <text x="190" y="31" textAnchor="middle" fill="white" fontSize="13" fontWeight="bold">/ (ルート)</text>
+      <line x1="190" y1="42" x2="100" y2="75" stroke="#718096" strokeWidth="1.5"/>
+      <line x1="190" y1="42" x2="190" y2="75" stroke="#718096" strokeWidth="1.5"/>
+      <line x1="190" y1="42" x2="280" y2="75" stroke="#718096" strokeWidth="1.5"/>
+      {[
+        { x: 65, label: 'home' },
+        { x: 155, label: 'etc' },
+        { x: 245, label: 'var' },
+      ].map(d => (
+        <g key={d.label}>
+          <rect x={d.x} y="75" width="70" height="28" rx="5" fill="#48bb78" opacity="0.7"/>
+          <text x={d.x + 35} y="94" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">{d.label}</text>
+        </g>
+      ))}
+      <line x1="100" y1="103" x2="65" y2="135" stroke="#718096" strokeWidth="1.5"/>
+      <line x1="100" y1="103" x2="135" y2="135" stroke="#718096" strokeWidth="1.5"/>
+      {[
+        { x: 30, label: 'user1' },
+        { x: 100, label: 'user2' },
+      ].map(d => (
+        <g key={d.label}>
+          <rect x={d.x} y="135" width="65" height="26" rx="5" fill="#ed8936" opacity="0.7"/>
+          <text x={d.x + 32} y="152" textAnchor="middle" fill="white" fontSize="11">{d.label}</text>
+        </g>
+      ))}
+      <text x="190" y="190" textAnchor="middle" fill="#718096" fontSize="11">絶対パス例: /home/user1/file.txt</text>
+    </svg>
+  </div>
+);
+
+const DatabaseDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">テーブルの構造と結合</h4>
+    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+      <div>
+        <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 6, color: '#667eea' }}>社員テーブル</div>
+        <table className="truth-table" style={{ fontSize: 13 }}>
+          <thead><tr><th>社員ID</th><th>氏名</th><th>部署ID</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>田中</td><td style={{ color: '#e53e3e', fontWeight: 700 }}>10</td></tr>
+            <tr><td>2</td><td>鈴木</td><td style={{ color: '#e53e3e', fontWeight: 700 }}>20</td></tr>
+            <tr><td>3</td><td>佐藤</td><td style={{ color: '#e53e3e', fontWeight: 700 }}>10</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', fontSize: 24, color: '#718096' }}>⟷</div>
+      <div>
+        <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 6, color: '#48bb78' }}>部署テーブル</div>
+        <table className="truth-table" style={{ fontSize: 13 }}>
+          <thead><tr><th>部署ID</th><th>部署名</th></tr></thead>
+          <tbody>
+            <tr><td style={{ color: '#e53e3e', fontWeight: 700 }}>10</td><td>開発部</td></tr>
+            <tr><td style={{ color: '#e53e3e', fontWeight: 700 }}>20</td><td>営業部</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div style={{ textAlign: 'center', marginTop: 12, fontSize: 12, color: '#718096' }}>
+      部署IDが外部キー（Foreign Key）
+    </div>
+  </div>
+);
+
+const TransactionDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">トランザクションの流れ（銀行振込の例）</h4>
+    <svg viewBox="0 0 480 180" className="diagram-svg">
+      {[
+        { x: 10, label: 'BEGIN', sub: 'トランザクション開始', color: '#667eea' },
+        { x: 130, label: '引き落とし', sub: 'A口座 -1万円', color: '#ed8936' },
+        { x: 250, label: '入金', sub: 'B口座 +1万円', color: '#48bb78' },
+        { x: 370, label: 'COMMIT', sub: '確定', color: '#38a169' },
+      ].map((step, i) => (
+        <g key={step.label}>
+          <rect x={step.x} y="50" width="100" height="60" rx="8" fill={step.color} opacity="0.2" stroke={step.color} strokeWidth="2"/>
+          <text x={step.x + 50} y="77" textAnchor="middle" fill="#4a5568" fontSize="12" fontWeight="bold">{step.label}</text>
+          <text x={step.x + 50} y="97" textAnchor="middle" fill="#718096" fontSize="10">{step.sub}</text>
+          {i < 3 && <path d={`M ${step.x + 100} 80 L ${step.x + 128} 80`} stroke="#718096" strokeWidth="1.5" markerEnd="url(#a4)"/>}
+        </g>
+      ))}
+      <path d="M 200 115 Q 200 150 240 150 Q 280 150 280 115" stroke="#fc8181" strokeWidth="1.5" fill="none" strokeDasharray="4"/>
+      <text x="240" y="168" textAnchor="middle" fill="#fc8181" fontSize="11">失敗時 → ROLLBACK（全て元に戻す）</text>
+      <defs>
+        <marker id="a4" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#718096"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+);
+
+const WaterfallDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">ウォーターフォールモデル</h4>
+    <svg viewBox="0 0 420 220" className="diagram-svg">
+      {[
+        { y: 10, label: '要件定義', color: '#667eea' },
+        { y: 55, label: '外部設計', color: '#764ba2' },
+        { y: 100, label: '内部設計', color: '#9f7aea' },
+        { y: 145, label: '実装・単体テスト', color: '#48bb78' },
+        { y: 190, label: '結合・システムテスト', color: '#38a169' },
+      ].map((step, i) => (
+        <g key={step.label}>
+          <rect x={10 + i * 20} y={step.y} width={400 - i * 40} height="38" rx="6" fill={step.color} opacity="0.75"/>
+          <text x={210} y={step.y + 24} textAnchor="middle" fill="white" fontSize="13" fontWeight="bold">{step.label}</text>
+        </g>
+      ))}
+    </svg>
+  </div>
+);
+
+const TestingDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">テストの種類（V字モデル）</h4>
+    <svg viewBox="0 0 440 200" className="diagram-svg">
+      {[
+        { lx: 10, ly: 20, label: '要件定義', rx: 340, ry: 20, rlabel: '受入テスト', color: '#667eea' },
+        { lx: 50, ly: 60, label: '外部設計', rx: 300, ry: 60, rlabel: 'システムテスト', color: '#9f7aea' },
+        { lx: 90, ly: 100, label: '内部設計', rx: 260, ry: 100, rlabel: '結合テスト', color: '#ed8936' },
+        { lx: 130, ly: 140, label: '実装', rx: 220, ry: 140, rlabel: '単体テスト', color: '#48bb78' },
+      ].map(row => (
+        <g key={row.label}>
+          <rect x={row.lx} y={row.ly} width="90" height="28" rx="5" fill={row.color} opacity="0.7"/>
+          <text x={row.lx + 45} y={row.ly + 19} textAnchor="middle" fill="white" fontSize="11" fontWeight="bold">{row.label}</text>
+          <rect x={row.rx} y={row.ry} width="90" height="28" rx="5" fill={row.color} opacity="0.4" stroke={row.color} strokeWidth="1.5"/>
+          <text x={row.rx + 45} y={row.ry + 19} textAnchor="middle" fill="#4a5568" fontSize="11" fontWeight="bold">{row.rlabel}</text>
+          <line x1={row.lx + 90} y1={row.ly + 14} x2={row.rx} y2={row.ry + 14} stroke={row.color} strokeWidth="1" strokeDasharray="4" opacity="0.5"/>
+        </g>
+      ))}
+      <path d="M 175 155 L 215 155" stroke="#718096" strokeWidth="2" markerEnd="url(#a5)"/>
+      <defs>
+        <marker id="a5" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#718096"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+);
+
+const GanttDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">ガントチャート（例）</h4>
+    <div style={{ overflowX: 'auto' }}>
+      <table style={{ borderCollapse: 'collapse', width: '100%', fontSize: 13 }}>
+        <thead>
+          <tr>
+            <th style={{ padding: '6px 10px', background: '#667eea', color: 'white', textAlign: 'left', width: 120 }}>作業</th>
+            {['1週', '2週', '3週', '4週', '5週', '6週'].map(w => (
+              <th key={w} style={{ padding: '6px 8px', background: '#667eea', color: 'white', textAlign: 'center', width: 60 }}>{w}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {[
+            { name: '要件定義', start: 0, len: 2, color: '#667eea' },
+            { name: '設計', start: 1, len: 2, color: '#9f7aea' },
+            { name: '実装', start: 2, len: 3, color: '#48bb78' },
+            { name: 'テスト', start: 4, len: 2, color: '#ed8936' },
+          ].map(task => (
+            <tr key={task.name}>
+              <td style={{ padding: '6px 10px', borderBottom: '1px solid #e2e8f0', fontWeight: 600 }}>{task.name}</td>
+              {[0, 1, 2, 3, 4, 5].map(w => (
+                <td key={w} style={{ padding: 4, borderBottom: '1px solid #e2e8f0' }}>
+                  {w >= task.start && w < task.start + task.len && (
+                    <div style={{ background: task.color, borderRadius: 4, height: 20, opacity: 0.75 }} />
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+);
+
+const ReliabilityDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">稼働率の計算</h4>
+    <svg viewBox="0 0 440 160" className="diagram-svg">
+      <rect x="10" y="30" width="180" height="50" rx="8" fill="#48bb78" opacity="0.2" stroke="#48bb78" strokeWidth="2"/>
+      <text x="100" y="52" textAnchor="middle" fill="#276749" fontWeight="bold" fontSize="13">MTBF（平均故障間隔）</text>
+      <text x="100" y="70" textAnchor="middle" fill="#276749" fontSize="12">正常に動いている時間</text>
+
+      <rect x="250" y="30" width="180" height="50" rx="8" fill="#fc8181" opacity="0.2" stroke="#fc8181" strokeWidth="2"/>
+      <text x="340" y="52" textAnchor="middle" fill="#c53030" fontWeight="bold" fontSize="13">MTTR（平均修復時間）</text>
+      <text x="340" y="70" textAnchor="middle" fill="#c53030" fontSize="12">故障してから復旧までの時間</text>
+
+      <rect x="100" y="110" width="240" height="40" rx="8" fill="#667eea" opacity="0.15" stroke="#667eea" strokeWidth="2"/>
+      <text x="220" y="132" textAnchor="middle" fill="#4a5568" fontSize="13" fontWeight="bold">稼働率 = MTBF ÷ (MTBF + MTTR)</text>
+    </svg>
+  </div>
+);
+
+const StrategyDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">SWOT分析</h4>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+      {[
+        { label: 'S 強み', sub: 'Strengths', desc: '自社の競合優位性', color: '#667eea', bg: 'rgba(102,126,234,0.1)' },
+        { label: 'W 弱み', sub: 'Weaknesses', desc: '自社の改善が必要な点', color: '#fc8181', bg: 'rgba(252,129,129,0.1)' },
+        { label: 'O 機会', sub: 'Opportunities', desc: '外部環境の有利な変化', color: '#48bb78', bg: 'rgba(72,187,120,0.1)' },
+        { label: 'T 脅威', sub: 'Threats', desc: '外部環境の不利な変化', color: '#ed8936', bg: 'rgba(237,137,54,0.1)' },
+      ].map(item => (
+        <div key={item.label} style={{ background: item.bg, border: `2px solid ${item.color}`, borderRadius: 8, padding: '12px 14px' }}>
+          <div style={{ color: item.color, fontWeight: 800, fontSize: 15 }}>{item.label}</div>
+          <div style={{ color: '#718096', fontSize: 11, marginBottom: 4 }}>{item.sub}</div>
+          <div style={{ fontSize: 13, color: '#4a5568' }}>{item.desc}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const LawDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">知的財産権の種類と保護期間</h4>
+    <table className="truth-table">
+      <thead>
+        <tr><th>権利の種類</th><th>保護対象</th><th>保護期間</th><th>登録</th></tr>
+      </thead>
+      <tbody>
+        <tr><td style={{ fontWeight: 700, color: '#667eea' }}>著作権</td><td>プログラム・文章・音楽</td><td>死後70年</td><td>不要</td></tr>
+        <tr><td style={{ fontWeight: 700, color: '#48bb78' }}>特許権</td><td>発明（技術的アイデア）</td><td>出願から20年</td><td>必要</td></tr>
+        <tr><td style={{ fontWeight: 700, color: '#ed8936' }}>実用新案権</td><td>考案（形状・構造）</td><td>出願から10年</td><td>必要</td></tr>
+        <tr><td style={{ fontWeight: 700, color: '#9f7aea' }}>意匠権</td><td>デザイン（外観）</td><td>登録から25年</td><td>必要</td></tr>
+        <tr><td style={{ fontWeight: 700, color: '#fc8181' }}>商標権</td><td>ブランド名・ロゴ</td><td>登録から10年（更新可）</td><td>必要</td></tr>
+      </tbody>
+    </table>
+  </div>
+);
+
+const RecursionDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">再帰呼び出しのスタック（階乗(3)の例）</h4>
+    <svg viewBox="0 0 440 180" className="diagram-svg">
+      {[
+        { x: 10, label: '階乗(3)', sub: '3 × 階乗(2)', color: '#667eea' },
+        { x: 120, label: '階乗(2)', sub: '2 × 階乗(1)', color: '#9f7aea' },
+        { x: 230, label: '階乗(1)', sub: '返り値: 1', color: '#48bb78' },
+        { x: 340, label: '戻る', sub: '2×1=2, 3×2=6', color: '#ed8936' },
+      ].map((step, i) => (
+        <g key={step.label}>
+          <rect x={step.x} y="50" width="100" height="60" rx="8" fill={step.color} opacity="0.2" stroke={step.color} strokeWidth="2"/>
+          <text x={step.x + 50} y="77" textAnchor="middle" fill="#4a5568" fontSize="13" fontWeight="bold">{step.label}</text>
+          <text x={step.x + 50} y="97" textAnchor="middle" fill="#718096" fontSize="11">{step.sub}</text>
+          {i < 3 && <path d={`M ${step.x + 100} 80 L ${step.x + 118} 80`} stroke="#718096" strokeWidth="1.5" markerEnd="url(#a6)"/>}
+        </g>
+      ))}
+      <defs>
+        <marker id="a6" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#718096"/>
+        </marker>
+      </defs>
+      <text x="220" y="160" textAnchor="middle" fill="#667eea" fontSize="13" fontWeight="bold">最終結果: 6</text>
+    </svg>
+  </div>
+);
+
+const TreeDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">二分探索木</h4>
+    <svg viewBox="0 0 340 200" className="diagram-svg">
+      {/* Lines */}
+      <line x1="170" y1="40" x2="90" y2="90" stroke="#718096" strokeWidth="1.5"/>
+      <line x1="170" y1="40" x2="250" y2="90" stroke="#718096" strokeWidth="1.5"/>
+      <line x1="90" y1="110" x2="50" y2="155" stroke="#718096" strokeWidth="1.5"/>
+      <line x1="90" y1="110" x2="130" y2="155" stroke="#718096" strokeWidth="1.5"/>
+      <line x1="130" y1="175" x2="110" y2="195" stroke="#718096" strokeWidth="1"/>
+      <line x1="130" y1="175" x2="150" y2="195" stroke="#718096" strokeWidth="1"/>
+      {/* Nodes */}
+      {[
+        { x: 170, y: 20, val: '8', color: '#667eea' },
+        { x: 90, y: 90, val: '3', color: '#9f7aea' },
+        { x: 250, y: 90, val: '10', color: '#9f7aea' },
+        { x: 50, y: 155, val: '1', color: '#48bb78' },
+        { x: 130, y: 155, val: '6', color: '#48bb78' },
+        { x: 110, y: 190, val: '4', color: '#ed8936' },
+        { x: 150, y: 190, val: '7', color: '#ed8936' },
+      ].map(n => (
+        <g key={n.val}>
+          <circle cx={n.x} cy={n.y + 10} r="18" fill={n.color} opacity="0.8"/>
+          <text x={n.x} y={n.y + 15} textAnchor="middle" fill="white" fontSize="13" fontWeight="bold">{n.val}</text>
+        </g>
+      ))}
+      <text x="170" y="195" textAnchor="middle" fill="#718096" fontSize="11">左 &lt; 親 &lt; 右</text>
+    </svg>
+  </div>
+);
+
+const OopDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">クラスとインスタンスの関係</h4>
+    <svg viewBox="0 0 420 180" className="diagram-svg">
+      <rect x="10" y="20" width="130" height="130" rx="8" fill="#667eea" opacity="0.1" stroke="#667eea" strokeWidth="2"/>
+      <text x="75" y="45" textAnchor="middle" fill="#667eea" fontWeight="bold" fontSize="13">クラス（設計図）</text>
+      <text x="75" y="65" textAnchor="middle" fill="#4a5568" fontSize="11">動物</text>
+      <line x1="20" y1="73" x2="130" y2="73" stroke="#e2e8f0" strokeWidth="1"/>
+      <text x="75" y="90" textAnchor="middle" fill="#4a5568" fontSize="11">属性: 名前, 年齢</text>
+      <line x1="20" y1="100" x2="130" y2="100" stroke="#e2e8f0" strokeWidth="1"/>
+      <text x="75" y="117" textAnchor="middle" fill="#4a5568" fontSize="11">メソッド: 鳴く()</text>
+      <text x="75" y="135" textAnchor="middle" fill="#4a5568" fontSize="11">メソッド: 走る()</text>
+
+      <path d="M 145 85 L 175 85" stroke="#ed8936" strokeWidth="2" markerEnd="url(#a7)" strokeDasharray="5"/>
+      <text x="160" y="78" textAnchor="middle" fill="#ed8936" fontSize="10">new</text>
+
+      {[
+        { x: 185, name: 'ポチ', age: '3歳' },
+        { x: 310, name: 'タマ', age: '2歳' },
+      ].map(inst => (
+        <g key={inst.name}>
+          <rect x={inst.x} y="40" width="115" height="90" rx="8" fill="#48bb78" opacity="0.1" stroke="#48bb78" strokeWidth="2"/>
+          <text x={inst.x + 57} y="62" textAnchor="middle" fill="#276749" fontWeight="bold" fontSize="12">インスタンス</text>
+          <line x1={inst.x + 10} y1="70" x2={inst.x + 105} y2="70" stroke="#e2e8f0" strokeWidth="1"/>
+          <text x={inst.x + 57} y="87" textAnchor="middle" fill="#4a5568" fontSize="11">名前: {inst.name}</text>
+          <text x={inst.x + 57} y="104" textAnchor="middle" fill="#4a5568" fontSize="11">年齢: {inst.age}</text>
+        </g>
+      ))}
+      <defs>
+        <marker id="a7" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#ed8936"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+);
+
+const InheritanceDiagram = () => (
+  <div className="diagram-container">
+    <h4 className="diagram-title">継承とポリモーフィズム</h4>
+    <svg viewBox="0 0 380 200" className="diagram-svg">
+      <rect x="130" y="10" width="120" height="60" rx="8" fill="#667eea" opacity="0.2" stroke="#667eea" strokeWidth="2"/>
+      <text x="190" y="35" textAnchor="middle" fill="#4a5568" fontWeight="bold" fontSize="13">動物（親クラス）</text>
+      <text x="190" y="55" textAnchor="middle" fill="#718096" fontSize="11">鳴く() → "..."</text>
+
+      <path d="M 120 80 L 80 120" stroke="#667eea" strokeWidth="2"/>
+      <path d="M 260 80 L 300 120" stroke="#667eea" strokeWidth="2"/>
+      <polygon points="120,80 108,80 114,92" fill="white" stroke="#667eea" strokeWidth="1.5"/>
+      <polygon points="260,80 272,80 266,92" fill="white" stroke="#667eea" strokeWidth="1.5"/>
+
+      <rect x="20" y="120" width="120" height="60" rx="8" fill="#48bb78" opacity="0.2" stroke="#48bb78" strokeWidth="2"/>
+      <text x="80" y="145" textAnchor="middle" fill="#4a5568" fontWeight="bold" fontSize="13">犬（子クラス）</text>
+      <text x="80" y="163" textAnchor="middle" fill="#276749" fontSize="11">鳴く() → "ワン！"</text>
+
+      <rect x="240" y="120" width="120" height="60" rx="8" fill="#ed8936" opacity="0.2" stroke="#ed8936" strokeWidth="2"/>
+      <text x="300" y="145" textAnchor="middle" fill="#4a5568" fontWeight="bold" fontSize="13">猫（子クラス）</text>
+      <text x="300" y="163" textAnchor="middle" fill="#c05621" fontSize="11">鳴く() → "ニャー！"</text>
+
+      <text x="190" y="195" textAnchor="middle" fill="#718096" fontSize="11">↑ 同じ「鳴く()」でも動作が異なる = ポリモーフィズム</text>
+    </svg>
+  </div>
+);
+
 const diagrams: Record<string, React.FC> = {
   binary: BinaryDiagram,
   logic: LogicDiagram,
@@ -307,6 +690,20 @@ const diagrams: Record<string, React.FC> = {
   sort: SortDiagram,
   flowchart: FlowchartDiagram,
   clock: ClockDiagram,
+  os: OsDiagram,
+  filesystem: FilesystemDiagram,
+  database: DatabaseDiagram,
+  transaction: TransactionDiagram,
+  waterfall: WaterfallDiagram,
+  testing: TestingDiagram,
+  gantt: GanttDiagram,
+  reliability: ReliabilityDiagram,
+  strategy: StrategyDiagram,
+  law: LawDiagram,
+  recursion: RecursionDiagram,
+  tree: TreeDiagram,
+  oop: OopDiagram,
+  inheritance: InheritanceDiagram,
 };
 
 const Diagram: React.FC<DiagramProps> = ({ type }) => {
