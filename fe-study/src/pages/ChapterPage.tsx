@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getChapterById, curriculum } from '../data/curriculum';
 import Diagram from '../components/Diagram';
@@ -9,6 +9,18 @@ const ChapterPage: React.FC = () => {
   const navigate = useNavigate();
   const chapter = getChapterById(id || '');
   const [activeSection, setActiveSection] = useState(0);
+
+  // セクション変更時にページ先頭にスクロール
+  const changeSection = (index: number) => {
+    setActiveSection(index);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // チャプターが変わったらセクションをリセット
+  useEffect(() => {
+    setActiveSection(0);
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+  }, [id]);
 
   if (!chapter) {
     return (
@@ -42,7 +54,7 @@ const ChapterPage: React.FC = () => {
             <button
               key={sec.id}
               className={`section-nav-btn ${activeSection === i ? 'active' : ''}`}
-              onClick={() => setActiveSection(i)}
+              onClick={() => changeSection(i)}
             >
               <span className="sec-num">{i + 1}</span>
               {sec.title}
@@ -50,7 +62,7 @@ const ChapterPage: React.FC = () => {
           ))}
           <button
             className={`section-nav-btn ${activeSection === chapter.sections.length ? 'active' : ''}`}
-            onClick={() => setActiveSection(chapter.sections.length)}
+            onClick={() => changeSection(chapter.sections.length)}
           >
             <span className="sec-num">✓</span>
             章末確認問題
@@ -89,19 +101,19 @@ const ChapterPage: React.FC = () => {
             {section.questions.length > 0 && (
               <div className="section-quiz">
                 <h3 className="mini-quiz-title">このセクションの確認問題</h3>
-                <Quiz questions={section.questions} />
+                <Quiz key={section.id} questions={section.questions} />
               </div>
             )}
 
             <div className="section-nav-buttons">
               {activeSection > 0 && (
-                <button className="nav-btn prev" onClick={() => setActiveSection(activeSection - 1)}>
+                <button className="nav-btn prev" onClick={() => changeSection(activeSection - 1)}>
                   ← {chapter.sections[activeSection - 1].title}
                 </button>
               )}
               <button
                 className="nav-btn next"
-                onClick={() => setActiveSection(activeSection + 1)}
+                onClick={() => changeSection(activeSection + 1)}
               >
                 {activeSection < chapter.sections.length - 1
                   ? `次へ: ${chapter.sections[activeSection + 1].title} →`
@@ -115,7 +127,7 @@ const ChapterPage: React.FC = () => {
             <p className="chapter-quiz-desc">
               この章で学んだ内容を確認しましょう。全 {allQuestions.length} 問です。
             </p>
-            <Quiz questions={allQuestions} />
+            <Quiz key="chapter-end" questions={allQuestions} />
 
             <div className="chapter-nav">
               {prevChapter && (
