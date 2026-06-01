@@ -785,6 +785,84 @@ const diagrams: Record<string, React.FC> = {
   tree: TreeDiagram,
   oop: OopDiagram,
   inheritance: InheritanceDiagram,
+  pipeline: (() => (
+    <div className="diagram-container">
+      <h4 className="diagram-title">パイプライン処理（4段）</h4>
+      <svg viewBox="0 0 480 180" className="diagram-svg">
+        {['フェッチ','デコード','実行','書戻し'].map((stage, si) => (
+          <g key={stage}>
+            <rect x={10 + si*116} y={10} width={108} height={32} rx={6} fill="#667eea" opacity={0.6 + si*0.1}/>
+            <text x={10 + si*116 + 54} y={31} textAnchor="middle" fill="white" fontSize={12} fontWeight="bold">{stage}</text>
+            {si < 3 && <path d={`M ${118+si*116} 26 L ${126+si*116} 26`} stroke="#718096" strokeWidth={2} markerEnd="url(#ap1)"/>}
+          </g>
+        ))}
+        {[0,1,2,3].map(cmd => (
+          [0,1,2,3].map(stage => {
+            const col = cmd + stage;
+            if (col > 6) return null;
+            const colors = ['#667eea','#48bb78','#ed8936','#9f7aea'];
+            return (
+              <rect key={`${cmd}-${stage}`} x={10 + col*60} y={60 + cmd*28} width={52} height={22} rx={4}
+                fill={colors[cmd]} opacity={0.7}/>
+            );
+          })
+        ))}
+        {[0,1,2,3].map(cmd => (
+          <text key={cmd} x={2} y={75 + cmd*28} fill="#718096" fontSize={11} textAnchor="middle">命令{cmd+1}</text>
+        ))}
+        <text x={240} y={175} textAnchor="middle" fill="#718096" fontSize={11}>→ クロック時間</text>
+        <defs>
+          <marker id="ap1" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#718096"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+  )) as React.FC,
+  memoryhierarchy: (() => (
+    <div className="diagram-container">
+      <h4 className="diagram-title">メモリ階層（速度 vs 容量）</h4>
+      <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:6 }}>
+        {[
+          { label:'レジスタ', speed:'〜1ns', cap:'数十B', w:80, color:'#667eea' },
+          { label:'キャッシュ (L1/L2/L3)', speed:'1〜10ns', cap:'KB〜MB', w:160, color:'#9f7aea' },
+          { label:'主記憶（RAM）', speed:'〜100ns', cap:'GB', w:260, color:'#48bb78' },
+          { label:'SSD', speed:'〜0.1ms', cap:'数百GB', w:340, color:'#ed8936' },
+          { label:'HDD', speed:'〜10ms', cap:'TB', w:420, color:'#fc8181' },
+        ].map(m => (
+          <div key={m.label} style={{ width:m.w, background:m.color, borderRadius:6, padding:'6px 12px', color:'white', display:'flex', justifyContent:'space-between', opacity:0.85 }}>
+            <span style={{ fontSize:12, fontWeight:700 }}>{m.label}</span>
+            <span style={{ fontSize:11, opacity:0.9 }}>{m.speed} / {m.cap}</span>
+          </div>
+        ))}
+        <div style={{ fontSize:12, color:'#718096', marginTop:4 }}>↑ 速い・小容量・高価　　↓ 遅い・大容量・安価</div>
+      </div>
+    </div>
+  )) as React.FC,
+  bus: (() => (
+    <div className="diagram-container">
+      <h4 className="diagram-title">バスとDMA転送</h4>
+      <svg viewBox="0 0 480 180" className="diagram-svg">
+        <rect x="10" y="60" width="90" height="60" rx="8" fill="#667eea" opacity="0.7"/>
+        <text x="55" y="88" textAnchor="middle" fill="white" fontSize="13" fontWeight="bold">CPU</text>
+        <text x="55" y="106" textAnchor="middle" fill="white" fontSize="10">制御・演算</text>
+        <rect x="195" y="60" width="90" height="60" rx="8" fill="#48bb78" opacity="0.7"/>
+        <text x="240" y="88" textAnchor="middle" fill="white" fontSize="13" fontWeight="bold">主記憶</text>
+        <text x="240" y="106" textAnchor="middle" fill="white" fontSize="10">RAM</text>
+        <rect x="380" y="20" width="90" height="50" rx="8" fill="#ed8936" opacity="0.7"/>
+        <text x="425" y="43" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">入出力</text>
+        <text x="425" y="60" textAnchor="middle" fill="white" fontSize="10">装置</text>
+        <rect x="380" y="110" width="90" height="50" rx="8" fill="#9f7aea" opacity="0.7"/>
+        <text x="425" y="133" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">DMA</text>
+        <text x="425" y="150" textAnchor="middle" fill="white" fontSize="10">コントローラ</text>
+        <line x1="100" y1="90" x2="193" y2="90" stroke="#4a5568" strokeWidth="3"/>
+        <line x1="285" y1="90" x2="378" y2="45" stroke="#4a5568" strokeWidth="1.5" strokeDasharray="4"/>
+        <line x1="285" y1="90" x2="378" y2="135" stroke="#ed8936" strokeWidth="2"/>
+        <line x1="378" y1="135" x2="325" y2="90" stroke="#ed8936" strokeWidth="2"/>
+        <text x="240" y="170" textAnchor="middle" fill="#ed8936" fontSize="11">DMA: CPUを介さずに主記憶↔入出力を直結</text>
+      </svg>
+    </div>
+  )) as React.FC,
   complement: ComplementDiagram,
   floatingpoint: FloatingPointDiagram,
   datasize: DataSizeDiagram,
