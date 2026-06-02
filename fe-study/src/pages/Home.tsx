@@ -95,6 +95,55 @@ const Home: React.FC = () => {
           ))}
         </div>
       </section>
+
+      <section className="external-section">
+        <h2>📚 あわせて活用したい外部サービス</h2>
+        <p className="external-desc">このサイトで基礎を固めたら、実際の過去問で実力を試しましょう。</p>
+        <div className="external-grid">
+          <a
+            href="https://www.fe-siken.com/fekakomon.php"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="external-card external-card-primary"
+          >
+            <div className="external-card-header">
+              <span className="external-icon">📝</span>
+              <span className="external-badge">おすすめ</span>
+            </div>
+            <h3>基本情報技術者過去問道場</h3>
+            <p>過去問を年度・分野別に絞り込んで解ける定番サービス。解説も充実。科目A・科目B両対応。</p>
+            <span className="external-link-label">fe-siken.com →</span>
+          </a>
+
+          <a
+            href="https://www.fe-siken.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="external-card"
+          >
+            <div className="external-card-header">
+              <span className="external-icon">📖</span>
+            </div>
+            <h3>基本情報技術者試験ドットコム</h3>
+            <p>用語集・午前問題の解説が充実。このサイトと並行して辞書代わりに使うと効果的。</p>
+            <span className="external-link-label">fe-siken.com →</span>
+          </a>
+
+          <a
+            href="https://www.ipa.go.jp/shiken/kubun/fe.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="external-card"
+          >
+            <div className="external-card-header">
+              <span className="external-icon">🏛️</span>
+            </div>
+            <h3>IPA 公式サイト（試験情報）</h3>
+            <p>試験日程・申込み・サンプル問題・シラバスなど公式情報はここで確認。</p>
+            <span className="external-link-label">ipa.go.jp →</span>
+          </a>
+        </div>
+      </section>
     </div>
   );
 };

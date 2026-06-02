@@ -129,6 +129,21 @@ const ChapterPage: React.FC = () => {
             </p>
             <Quiz key="chapter-end" questions={allQuestions} />
 
+            {/* 過去問道場バナー */}
+            <a
+              href="https://www.fe-siken.com/fekakomon.php"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="kakomon-banner"
+            >
+              <span className="kakomon-icon">📝</span>
+              <div className="kakomon-text">
+                <strong>過去問道場で実力試し</strong>
+                <span>実際の過去問を解いて合格力をつけよう（fe-siken.com）</span>
+              </div>
+              <span className="kakomon-arrow">→</span>
+            </a>
+
             <div className="chapter-nav">
               {prevChapter && (
                 <button className="nav-btn prev" onClick={() => navigate(`/chapter/${prevChapter.id}`)}>
