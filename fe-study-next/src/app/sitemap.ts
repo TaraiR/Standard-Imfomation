@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { curriculum } from '@/data/curriculum';
 
-const SITE_URL = 'https://standard-imfomation.vercel.app';
+const SITE_URL = 'https://standard-information.vercel.app';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const chapterRoutes = curriculum.map(ch => ({

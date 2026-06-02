@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { curriculum, getChapterById } from '@/data/curriculum';
 import ChapterContent from '@/components/ChapterContent';
 
-const SITE_URL = 'https://standard-imfomation.vercel.app';
+const SITE_URL = 'https://standard-information.vercel.app';
 
 // ビルド時に全章のパスを静的生成
 export function generateStaticParams() {

@@ -3,7 +3,7 @@ import '../styles/global.css';
 import Navbar from '@/components/Navbar';
 import { Analytics } from '@vercel/analytics/react';
 
-const SITE_URL = 'https://standard-imfomation.vercel.app';
+const SITE_URL = 'https://standard-information.vercel.app';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

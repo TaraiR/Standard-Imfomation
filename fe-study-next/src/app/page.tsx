@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { curriculum } from '@/data/curriculum';
 
-const SITE_URL = 'https://standard-imfomation.vercel.app';
+const SITE_URL = 'https://standard-information.vercel.app';
 
 export const metadata: Metadata = {
   title: '基本情報技術者試験 完全対策 | 図解でわかる無料学習サイト',
