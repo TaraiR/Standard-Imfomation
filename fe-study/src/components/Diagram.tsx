@@ -1343,6 +1343,65 @@ const diagrams: Record<string, React.FC> = {
       </div>
     </div>
   )) as React.FC,
+  'array-list': (() => (
+    <div className="diagram-container">
+      <h4 className="diagram-title">配列 vs 連結リストの構造</h4>
+      <svg viewBox="0 0 480 180" className="diagram-svg">
+        {/* Array */}
+        <text x="10" y="20" fill="#667eea" fontWeight="bold" fontSize="13">配列（連続メモリ）</text>
+        {[10,20,30,40,50].map((v,i) => (
+          <g key={i}>
+            <rect x={10+i*80} y={30} width={70} height={44} rx={4} fill="#667eea" opacity={0.7}/>
+            <text x={45+i*80} y={48} textAnchor="middle" fill="white" fontSize={10}>idx[{i}]</text>
+            <text x={45+i*80} y={65} textAnchor="middle" fill="white" fontSize={16} fontWeight="bold">{v}</text>
+          </g>
+        ))}
+        <text x="10" y="90" fill="#718096" fontSize="11">アクセス O(1) ／ 挿入削除 O(n)</text>
+        {/* Linked List */}
+        <text x="10" y="115" fill="#48bb78" fontWeight="bold" fontSize="13">連結リスト（非連続メモリ）</text>
+        {[10,20,30,40,50].map((v,i) => (
+          <g key={i}>
+            <rect x={10+i*90} y={125} width={60} height={36} rx={4} fill="#48bb78" opacity={0.7}/>
+            <text x={40+i*90} y={140} textAnchor="middle" fill="white" fontSize={13} fontWeight="bold">{v}</text>
+            <text x={40+i*90} y={155} textAnchor="middle" fill="white" fontSize={9}>→next</text>
+            {i < 4 && <path d={`M ${72+i*90} 143 L ${85+i*90} 143`} stroke="#276749" strokeWidth={2} markerEnd="url(#aal)"/>}
+          </g>
+        ))}
+        <text x="10" y="175" fill="#718096" fontSize="11">アクセス O(n) ／ 挿入削除 O(1)（位置既知時）</text>
+        <defs>
+          <marker id="aal" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+            <polygon points="0 0, 6 2.5, 0 5" fill="#276749"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+  )) as React.FC,
+  search: (() => (
+    <div className="diagram-container">
+      <h4 className="diagram-title">二分探索のトレース（配列から23を探す）</h4>
+      <svg viewBox="0 0 480 170" className="diagram-svg">
+        {[2,5,8,12,16,23,38,56].map((v,i) => (
+          <g key={i}>
+            <rect x={10+i*58} y={10} width={50} height={36} rx={4}
+              fill={i===5?'#48bb78':i===3||i===6?'#ed8936':'#667eea'} opacity={0.6}/>
+            <text x={35+i*58} y={24} textAnchor="middle" fill="white" fontSize={10}>idx{i}</text>
+            <text x={35+i*58} y={40} textAnchor="middle" fill="white" fontSize={14} fontWeight="bold">{v}</text>
+          </g>
+        ))}
+        {/* Step 1 */}
+        <text x={10} y={65} fill="#4a5568" fontSize={12} fontWeight="bold">第1回:</text>
+        <text x={60} y={65} fill="#4a5568" fontSize={12}>左=0, 右=7 → 中央=3 → A[3]=12 &lt; 23 → 左=4</text>
+        <rect x={10+3*58} y={8} width={50} height={40} rx={4} fill="none" stroke="#ed8936" strokeWidth={2.5}/>
+        {/* Step 2 */}
+        <text x={10} y={85} fill="#4a5568" fontSize={12} fontWeight="bold">第2回:</text>
+        <text x={60} y={85} fill="#4a5568" fontSize={12}>左=4, 右=7 → 中央=5 → A[5]=23 = 23 → 発見！</text>
+        <rect x={10+5*58} y={8} width={50} height={40} rx={4} fill="none" stroke="#48bb78" strokeWidth={2.5}/>
+        <text x={240} y={115} textAnchor="middle" fill="#48bb78" fontSize={13} fontWeight="bold">✓ 8要素をわずか2回で発見！</text>
+        <text x={240} y={133} textAnchor="middle" fill="#718096" fontSize={11}>線形探索なら最大8回必要</text>
+        <text x={240} y={155} textAnchor="middle" fill="#718096" fontSize={11}>n要素 → 最大 log₂n 回（n=1024なら10回）</text>
+      </svg>
+    </div>
+  )) as React.FC,
   complement: ComplementDiagram,
   floatingpoint: FloatingPointDiagram,
   datasize: DataSizeDiagram,
