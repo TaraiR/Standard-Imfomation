@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { curriculum } from '../data/curriculum';
+
+const SITE_URL = 'https://standard-imfomation.vercel.app';
 
 const Home: React.FC = () => {
   const subjectA = curriculum.filter(c => c.subject === 'A');
@@ -8,6 +11,26 @@ const Home: React.FC = () => {
 
   return (
     <div className="home">
+      <Helmet>
+        <title>基本情報技術者試験 完全対策 | 図解でわかる無料学習サイト</title>
+        <meta name="description" content="基本情報技術者試験（FE）を図解・擬似コードでわかりやすく解説。科目A・科目B両対応。2進数・ネットワーク・セキュリティ・アルゴリズムなど全13章・100問以上の練習問題付き。完全無料。" />
+        <link rel="canonical" href={SITE_URL} />
+        <meta property="og:title" content="基本情報技術者試験 完全対策 | 図解でわかる無料学習サイト" />
+        <meta property="og:description" content="科目A・科目B対応。図解・練習問題付きで基本情報技術者試験を完全攻略。全13章・100問以上。完全無料。" />
+        <meta property="og:url" content={SITE_URL} />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "基本情報技術者試験 学習サイト",
+          "url": SITE_URL,
+          "description": "基本情報技術者試験を図解でわかりやすく解説する無料学習サイト",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": `${SITE_URL}/chapter/{search_term_string}`,
+            "query-input": "required name=search_term_string"
+          }
+        })}</script>
+      </Helmet>
       <section className="hero">
         <div className="hero-content">
           <h1 className="hero-title">基本情報技術者試験</h1>

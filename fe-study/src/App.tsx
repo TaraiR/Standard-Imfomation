@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
+import { HelmetProvider } from 'react-helmet-async';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import ChapterPage from './pages/ChapterPage';
@@ -8,6 +9,7 @@ import './styles/global.css';
 
 function App() {
   return (
+    <HelmetProvider>
     <BrowserRouter>
       <Navbar />
       <div className="page-wrapper">
@@ -21,6 +23,7 @@ function App() {
       </footer>
       <Analytics />
     </BrowserRouter>
+    </HelmetProvider>
   );
 }
 

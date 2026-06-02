@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { getChapterById, curriculum } from '../data/curriculum';
 import Diagram from '../components/Diagram';
 import Quiz from '../components/Quiz';
+
+const SITE_URL = 'https://standard-imfomation.vercel.app';
 
 const ChapterPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -39,8 +42,39 @@ const ChapterPage: React.FC = () => {
   const section = chapter.sections[activeSection];
   const allQuestions = chapter.sections.flatMap(s => s.questions);
 
+  const chapterIndex = allChapters.findIndex(c => c.id === id) + 1;
+  const pageTitle = `${chapter.title}【第${chapterIndex}章】基本情報技術者試験 科目${chapter.subject} | FE試験対策`;
+  const pageDesc = chapter.description + ` 図解・練習問題付きで${chapter.title}を徹底解説。基本情報技術者試験（FE試験）完全対策。`;
+  const canonicalUrl = `${SITE_URL}/chapter/${chapter.id}`;
+
   return (
     <div className="chapter-page">
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDesc} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDesc} />
+        <meta property="og:url" content={canonicalUrl} />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Course",
+          "name": chapter.title,
+          "description": chapter.description,
+          "provider": {
+            "@type": "Organization",
+            "name": "基本情報技術者試験 学習サイト",
+            "url": SITE_URL
+          },
+          "url": canonicalUrl,
+          "educationalLevel": "intermediate",
+          "inLanguage": "ja",
+          "about": {
+            "@type": "Thing",
+            "name": "基本情報技術者試験"
+          }
+        })}</script>
+      </Helmet>
       <aside className="chapter-sidebar">
         <div className="sidebar-header">
           <span className={`subject-tag ${chapter.subject === 'A' ? 'subject-a' : 'subject-b'}`}>
