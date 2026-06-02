@@ -398,6 +398,30 @@ a:hover { text-decoration: underline; }
 .section-content { background: white; border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); }
 .section-title { font-size: 24px; font-weight: 800; margin-bottom: 24px; color: var(--text); }
 
+/* ===== 解説ボックス ===== */
+.section-body .point-box {
+  background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(102,126,234,0.04));
+  border: 2px solid var(--primary);
+  border-left: 5px solid var(--primary);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 20px 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+}
+.section-body .caution-box {
+  background: linear-gradient(135deg, rgba(252,129,129,0.08), rgba(252,129,129,0.04));
+  border: 2px solid #fc8181;
+  border-left: 5px solid #fc8181;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 20px 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
 .section-body h3 { font-size: 17px; font-weight: 700; margin: 24px 0 10px; color: var(--text); }
 .section-body p { margin-bottom: 12px; font-size: 15px; line-height: 1.8; }
 .section-body ul, .section-body ol { padding-left: 24px; margin-bottom: 12px; }
