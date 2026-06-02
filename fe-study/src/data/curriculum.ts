@@ -392,9 +392,9 @@ const baseChapters: Chapter[] = [
   <li><strong>1 bit</strong>: 0か1の1桁。情報の最小単位。</li>
   <li><strong>1 byte = 8 bit</strong>: 英字1文字を表せる。</li>
   <li><strong>1 KB = 1,024 B = 2<sup>10</sup> B</strong>: 短いテキストファイル程度。</li>
-  <li><strong>1 MB = 1,024 KB = 2<sup>2</sup>⁰ B</strong>: 写真1枚・音楽1曲程度。</li>
-  <li><strong>1 GB = 1,024 MB = 2<sup>3</sup>⁰ B</strong>: 動画10〜20分程度。</li>
-  <li><strong>1 TB = 1,024 GB = 2<sup>4</sup>⁰ B</strong>: HDD/SSDの容量単位。</li>
+  <li><strong>1 MB = 1,024 KB = 2<sup>20</sup> B</strong>: 写真1枚・音楽1曲程度。</li>
+  <li><strong>1 GB = 1,024 MB = 2<sup>30</sup> B</strong>: 動画10〜20分程度。</li>
+  <li><strong>1 TB = 1,024 GB = 2<sup>40</sup> B</strong>: HDD/SSDの容量単位。</li>
 </ul>
 
 <h3>データ容量の計算（頻出！）</h3>
@@ -446,7 +446,7 @@ const baseChapters: Chapter[] = [
             question: '1 MBは何バイトか。',
             choices: ['1,000バイト', '1,024バイト', '1,048,576バイト', '1,000,000バイト'],
             answer: 2,
-            explanation: '1 MB = 2<sup>2</sup>⁰ byte = 1,024 × 1,024 = 1,048,576バイトです。SI単位（10<sup>6</sup>）と混同しないよう注意。',
+            explanation: '1 MB = 2<sup>20</sup> byte = 1,024 × 1,024 = 1,048,576バイトです。SI単位（10<sup>6</sup>）と混同しないよう注意。',
           },
           {
             id: 110,
