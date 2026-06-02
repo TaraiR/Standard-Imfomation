@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import ChapterPage from './pages/ChapterPage';
@@ -18,6 +19,7 @@ function App() {
       <footer className="site-footer">
         <p>基本情報技術者試験 学習サイト — 無料で学べる教材</p>
       </footer>
+      <Analytics />
     </BrowserRouter>
   );
 }

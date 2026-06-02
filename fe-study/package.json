@@ -13,6 +13,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-syntax-highlighter": "^15.5.13",
+    "@vercel/analytics": "^2.0.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-router-dom": "^7.16.0",
