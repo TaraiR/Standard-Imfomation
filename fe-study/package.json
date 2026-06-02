@@ -25,9 +25,37 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI= react-scripts build",
+    "build": "cross-env CI=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "reactSnap": {
+    "source": "build",
+    "minifyHtml": {
+      "collapseWhitespace": false,
+      "removeComments": false
+    },
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ],
+    "crawl": true,
+    "include": [
+      "/",
+      "/chapter/a1",
+      "/chapter/a2",
+      "/chapter/a3",
+      "/chapter/a4",
+      "/chapter/a5",
+      "/chapter/a6",
+      "/chapter/a7",
+      "/chapter/a8",
+      "/chapter/a9",
+      "/chapter/b1",
+      "/chapter/b2",
+      "/chapter/b3",
+      "/chapter/b4"
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -46,5 +74,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "react-snap": "^1.23.0"
   }
 }

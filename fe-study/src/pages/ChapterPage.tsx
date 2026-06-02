@@ -80,7 +80,7 @@ const ChapterPage: React.FC = () => {
           <span className={`subject-tag ${chapter.subject === 'A' ? 'subject-a' : 'subject-b'}`}>
             科目{chapter.subject}
           </span>
-          <h2 className="sidebar-title">{chapter.title}</h2>
+          <h1 className="sidebar-title">{chapter.title}</h1>
         </div>
 
         <nav className="section-nav">
@@ -119,7 +119,7 @@ const ChapterPage: React.FC = () => {
 
         {activeSection < chapter.sections.length ? (
           <div className="section-content">
-            <h2 className="section-title">{section.title}</h2>
+            <h2 className="section-title" aria-label={`${chapter.title} - ${section.title}`}>{section.title}</h2>
 
             <div
               className="section-body"
@@ -158,6 +158,7 @@ const ChapterPage: React.FC = () => {
         ) : (
           <div className="section-content">
             <h2 className="section-title">章末確認問題：{chapter.title}</h2>
+            {/* h1はサイドバーに設置済み */}
             <p className="chapter-quiz-desc">
               この章で学んだ内容を確認しましょう。全 {allQuestions.length} 問です。
             </p>
